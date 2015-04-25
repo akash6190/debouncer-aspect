@@ -1,5 +1,7 @@
 ##Spring AOP Utility for Debouncing method calls ###
-this project contains some utilities do debounce method calls by annotating them
+this project contains some utilities do debounce method calls by annotating them. based on:
+
+http://stackoverflow.com/questions/4742210/implementing-debounce-in-java
 
 
 ###Maven Config
