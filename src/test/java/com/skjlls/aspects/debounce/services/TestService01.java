@@ -1,4 +1,4 @@
-package com.cinefms.metrics.services;
+package com.skjlls.aspects.debounce.services;
 
 import com.skjlls.aspects.debounce.Debounce;
 

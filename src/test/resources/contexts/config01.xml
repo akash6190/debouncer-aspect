@@ -23,7 +23,7 @@
 
 	<context:annotation-config/>
 
-	<bean id="t01" class="com.skjlls.aspects.debounce.TestService01"></bean>
+	<bean id="t01" class="com.skjlls.aspects.debounce.services.TestService01"></bean>
 
 	<aop:aspectj-autoproxy />
 	<bean name="debounceAspect" class="com.skjlls.aspects.debounce.impl.DebounceAspect">

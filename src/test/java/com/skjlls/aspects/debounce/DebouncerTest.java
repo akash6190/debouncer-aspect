@@ -1,4 +1,4 @@
-package com.cinefms.metrics;
+package com.skjlls.aspects.debounce;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.cinefms.metrics.services.TestService01;
+import com.skjlls.aspects.debounce.services.TestService01;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DebouncerTest {
