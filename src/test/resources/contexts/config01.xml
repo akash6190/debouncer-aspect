@@ -23,10 +23,10 @@
 
 	<context:annotation-config/>
 
-	<bean id="t01" class="com.cinefms.metrics.services.TestService01"></bean>
+	<bean id="t01" class="com.skjlls.aspects.debounce.TestService01"></bean>
 
 	<aop:aspectj-autoproxy />
-	<bean name="debounceAspect" class="com.cinefms.aspects.debouncer.impl.DebounceAspect">
+	<bean name="debounceAspect" class="com.skjlls.aspects.debounce.impl.DebounceAspect">
 	</bean>
 	
 	
