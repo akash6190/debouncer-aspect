@@ -1,4 +1,4 @@
-package com.cinefms.aspects.debouncer.impl;
+package com.skjlls.aspects.debounce.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import com.cinefms.aspects.debouncer.annotations.Debounce;
+import com.skjlls.aspects.debounce.Debounce;
 
 @Aspect
 public class DebounceAspect {
@@ -34,24 +34,24 @@ public class DebounceAspect {
 		TimerTask callable = new TimerTask(debounce, key, proceedingJoinPoint);
 		
 		TimerTask actual = tasks.putIfAbsent(key.toString(), callable);
-		System.err.println(actual);
 		if(actual == null) {
 			actual = callable;
 			ScheduledFuture<Object> f = getExecutor(debounce, proceedingJoinPoint).schedule(actual, debounce.delay(), TimeUnit.MILLISECONDS);
 			callable.setFuture(f);
-			System.err.println("new future ... key: "+key);
 		} else {
-			actual.extend();
-			System.err.println("existing future ... ");
-			
+			if(debounce.extend()) {
+				actual.extend();
+			}
+		}
+		
+		if(debounce.async()) {
+			return null;
 		}
 
 		while(actual.getFuture()==null) {
 			Thread.yield();
 		}
 
-		System.err.println(Thread.currentThread().getName()+" calling GET ... ");
-		 
 		return actual.
 				getFuture().
 				get();
@@ -93,7 +93,6 @@ public class DebounceAspect {
 		
 		public boolean extend() {
 			synchronized (lock) {
-				System.err.println("extending ... ");
 				if (dueTime < 0) {
 					return false;
 				}
@@ -103,7 +102,6 @@ public class DebounceAspect {
 		}
 		
 		public Object call() {
-			System.err.println(" calling ... ");
 			synchronized (lock) {
 				long remaining = dueTime - System.currentTimeMillis();
 				if (remaining > 0) { 
@@ -112,9 +110,7 @@ public class DebounceAspect {
 					dueTime = -1;
 				}
 				try {
-					System.err.println(" calling ... proceeding");
 					Object o = proceedingJoinPoint.proceed();
-					System.err.println(" calling ... proceeding - got "+o);
 					return o;
 				} catch (Throwable e) {
 					throw new RuntimeException(e);

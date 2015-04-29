@@ -1,4 +1,4 @@
-package com.cinefms.aspects.debouncer.impl;
+package com.skjlls.aspects.debounce.impl;
 
 public interface Key extends Comparable<Key> {
 

@@ -1,6 +1,6 @@
 package com.cinefms.metrics.services;
 
-import com.cinefms.aspects.debouncer.annotations.Debounce;
+import com.skjlls.aspects.debounce.Debounce;
 
 
 public class TestService01 {

@@ -1,4 +1,4 @@
-package com.cinefms.aspects.debouncer.annotations;
+package com.skjlls.aspects.debounce;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -6,8 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.cinefms.aspects.debouncer.impl.CompoundKey;
-import com.cinefms.aspects.debouncer.impl.Key;
+import com.skjlls.aspects.debounce.impl.CompoundKey;
+import com.skjlls.aspects.debounce.impl.Key;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
@@ -23,6 +23,7 @@ public @interface Debounce {
 	public Class<? extends Key> key() default CompoundKey.class;
 	public int threads() default 1;
 	public String threadPool() default PER_METHOD;
+	public boolean extend() default true;
 	
 	
 }
