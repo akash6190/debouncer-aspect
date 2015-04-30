@@ -19,9 +19,9 @@ to use this in your project, add the following repo:
 and add a dependency:
 
     <dependency>
-        <groupId>com.cinefms.aspects</groupId>
-        <artifactId>debounce-aspect</artifactId>
-        <version>RELEASE</version>
+        <groupId>com.skjlls.aspects</groupId>
+        <artifactId>debouncer</artifactId>
+        <version>$VERSION</version>
     </dependency>
 
 ###Spring Config
@@ -36,7 +36,7 @@ note that this, by default, will only proxy based on the interfaces your proxy t
 ###Module Config
 finally, you will have to specify your aspects
 
-	<bean name="debounceAspect" class="com.cinefms.aspects.debouncer.impl.DebounceAspect">
+	<bean name="debounceAspect" class="com.skjlls.aspects.debouncer.impl.DebounceAspect">
 	</bean>
 
 ###Measure
