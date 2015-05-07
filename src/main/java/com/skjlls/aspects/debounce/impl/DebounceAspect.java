@@ -32,7 +32,7 @@ public class DebounceAspect {
 	@Around("anyPublicMethod() && @annotation(debounce)")
 	public Object all(ProceedingJoinPoint proceedingJoinPoint, Debounce debounce) throws Throwable {
 
-		log.debug("DebounceAspect triggered!");
+		log.debug("DebounceAspect triggered for: "+proceedingJoinPoint.getSignature());
 		
 		Key key = (Key)debounce.key().newInstance();
 		key.setArgs(proceedingJoinPoint.getArgs());
@@ -104,6 +104,7 @@ public class DebounceAspect {
 				if (dueTime < 0) {
 					return false;
 				}
+				log.debug("Debounce aspect - extending ... ");
 				dueTime = System.currentTimeMillis() + debounce.delay();
 				return true;
 			}
@@ -113,11 +114,13 @@ public class DebounceAspect {
 			synchronized (lock) {
 				long remaining = dueTime - System.currentTimeMillis();
 				if (remaining > 0) { 
+					log.debug("Debounce aspect - timeout not reached ... ");
 					this.future = getExecutor(debounce, proceedingJoinPoint).schedule(this, remaining, TimeUnit.MILLISECONDS);
 				} else {
 					dueTime = -1;
 				}
 				try {
+					log.debug("Debounce aspect - timeout reached!");
 					Object o = proceedingJoinPoint.proceed();
 					return o;
 				} catch (Throwable e) {
