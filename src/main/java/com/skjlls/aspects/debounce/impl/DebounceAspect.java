@@ -9,6 +9,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,6 +21,8 @@ import com.skjlls.aspects.debounce.Debounce;
 @Aspect
 public class DebounceAspect {
 
+	private static Log log = LogFactory.getLog(DebounceAspect.class);
+	
 	private Map<String,ScheduledExecutorService> scheduledExecutors = new HashMap<String, ScheduledExecutorService>(); 	
 	private ConcurrentHashMap<String,TimerTask> tasks = new ConcurrentHashMap<String, TimerTask>(); 	
 	
@@ -28,6 +32,8 @@ public class DebounceAspect {
 	@Around("anyPublicMethod() && @annotation(debounce)")
 	public Object all(ProceedingJoinPoint proceedingJoinPoint, Debounce debounce) throws Throwable {
 
+		log.debug("DebounceAspect triggered!");
+		
 		Key key = (Key)debounce.key().newInstance();
 		key.setArgs(proceedingJoinPoint.getArgs());
 		
@@ -45,6 +51,7 @@ public class DebounceAspect {
 		}
 		
 		if(debounce.async()) {
+			log.debug("DebounceAspect is async, returning null!");
 			return null;
 		}
 
@@ -52,6 +59,7 @@ public class DebounceAspect {
 			Thread.yield();
 		}
 
+		log.debug("DebounceAspect is async, returning value!");
 		return actual.
 				getFuture().
 				get();
