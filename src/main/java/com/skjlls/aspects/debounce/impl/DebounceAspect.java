@@ -121,7 +121,7 @@ public class DebounceAspect {
 				}
 				try {
 					log.debug("Debounce aspect - timeout reached!");
-					Object o = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+					Object o = proceedingJoinPoint.proceed();
 					log.debug("Debounce aspect - timeout reached .. returning: "+o);
 					return o;
 				} catch (Throwable e) {
