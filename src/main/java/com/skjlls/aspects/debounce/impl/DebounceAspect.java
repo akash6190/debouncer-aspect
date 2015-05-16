@@ -15,6 +15,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.util.StringUtils;
 
 import com.skjlls.aspects.debounce.Debounce;
 
@@ -33,6 +34,10 @@ public class DebounceAspect {
 	public Object all(ProceedingJoinPoint proceedingJoinPoint, Debounce debounce) throws Throwable {
 
 		log.debug("DebounceAspect triggered for: "+proceedingJoinPoint.getSignature());
+		
+		if(log.isDebugEnabled()) {
+			Thread.currentThread().dumpStack();
+		}
 		
 		Key key = (Key)debounce.key().newInstance();
 		key.setArgs(proceedingJoinPoint.getArgs());
