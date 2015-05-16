@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.skjlls.aspects</groupId>
 	<artifactId>debouncer</artifactId>
-	<version>0.2.16-SNAPSHOT</version>
+	<version>0.2.16</version>
 	<packaging>jar</packaging>
 	<modules>
 	</modules>
